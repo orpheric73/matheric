@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# matheric
-A modular Python library for secure and flexible user input validation
-=======
-# 🔐 Matheric
+# Matheric
 
 A modular Python library designed to simplify secure and flexible user input.  
 
@@ -181,4 +177,3 @@ This project is licensed under the [![License](https://img.shields.io/badge/Lice
 ## 👨‍💻 Author
 
 Orphéric SANGNIDJO
->>>>>>> e84e8ef (Initial commit)
