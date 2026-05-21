@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matheric"
+version = "0.1.0"
+description = "A modular Python library designed to simplify secure and flexible user input"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Orpheric"}
+]
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "build",
+    "twine"
+]
+
+[project.scripts]
+matheric = "matheric.utils.helpers:info"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
