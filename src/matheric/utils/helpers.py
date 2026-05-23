@@ -1,16 +1,38 @@
 def info():
     print("""
-    Matheric Lib
-    ==================
+    ╔══════════════════════════════════╗
+                MATHERIC LIB
+    ╚══════════════════════════════════╝
 
     Matheric is a modular Python library designed 
-    to simplify secure and flexible user input.
+    to simplify secure and flexible console input.
 
-    Modules:
-    - secure_input  : advanced and safe user input 
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    Author : Orphéric
-    Version: 0.1.0
+    AVAILABLE MODULES
+
+    • secureinput
+        Advanced and safe user input handling
+
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          
+    Features :
+          
+        - Automatic type validation
+        - Min/Max value control
+        - String length verification
+        - Input confirmation system
+    
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    
+    Github :  
+        https://github.com/orpheric73/matheric
+          
+    Author  : Orphéric
+    Version : 0.1.1
+    License : MIT
+    
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     """)
 
 def is_int(n):

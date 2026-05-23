@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "matheric"
-version = "0.1.0"
+version = "0.1.1"
 description = "A modular Python library designed to simplify secure and flexible user input"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [
-    {name = "Orpheric"}
+    {name = "Orphéric"}
 ]
 license = "MIT"
 dependencies = []

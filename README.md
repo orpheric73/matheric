@@ -31,10 +31,10 @@ Python
 from matheric import secureinput
 
 age = secureinput(
-    msg="Enter your age : ",
-    Type="int",
-    Min=0,
-    Max=120
+    "Enter your age: ",
+    type="int",
+    min=0,
+    except_msg = Please enter a valid age
 )
 
 print(age)
@@ -69,7 +69,7 @@ The **msg** can be ommitted if it is placed first
 Python
 
 number = secureinput(
-    msg="Enter a number : ",
+    "Enter a number : ",
     type="int",
     min=1,
     max=10
@@ -96,7 +96,7 @@ Python
 password = secureinput(
     msg="Enter password : ",
     type="string",
-    validate=True
+    validation=True
 )
 ```
 
@@ -104,21 +104,19 @@ The validation system allows the user to confirm the entered value before final 
 
 ## ⚙️ Parameters
 
-| Parameter | Type | Description | Default Value |
-|---|---|---|---|
-| `msg` | `string` | Message displayed before input |  |
+| Parameter | type | Description | Default Value |
+| --- | --- | --- | --- |
+| `msg` | `string` | Message displayed before input | "" |
 | `type` | `string / int / float` | Expected input type (`string`, `int`, `float`) | string |
 | `max` | `int / float` | Maximum allowed numeric value | NotDefined |
 | `min` | `int / float` | Minimum allowed numeric value | NotDefined |
 | `str_length` | `int` | Exact required string length | Any |
 | `str_max` | `int` | Maximum allowed string length | NotDefined |
 | `str_min` | `int` | Minimum allowed string length | NotDefined |
-| `except_msg` | `string` | Message displayed on invalid input | Type ERROR |
-| `validate` | `bool` | Enables validation protocol | False |
-| `validate_msg` | `string` | Validation confirmation message | Enter 1 to confirm the input |
-| `validation_caractere` | `string / int / float` | Value required to validate input | 1 |
-| `validation_caractere_type` | `string / int / float` | Type of validation caractere | int |
-| `validate_except_msg` | `string` | Validation error message | Must be an integer |
+| `except_msg` | `string` | Message displayed on invalid input | type ERROR |
+| `validation` | `bool` | Enables validation protocol | False |
+| `validation_msg` | `string` | Validation confirmation message | Enter 1 to confirm the input |
+| `validation_caractere` | `string / int / float` | Value required to validation input | 1 |
 
 ## 💡 Example With Validation
 
@@ -131,8 +129,9 @@ code = secureinput(
     msg="Enter access code : ",
     type="string",
     str_length=6,
-    validate=True,
-    validate_msg="Enter 1 to confirm the code : "
+    validation=True,
+    validation_msg="Confirm the code [y/N] "
+    validation_caractere="y"
 )
 ```
 
@@ -168,7 +167,7 @@ Bash
 matheric
 ```
 
-Displays general information about the framework.
+Displays general information about the library.
 
 ## 📜 License
 

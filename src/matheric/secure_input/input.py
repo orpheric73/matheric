@@ -1,15 +1,12 @@
 from ..utils.helpers import is_int, is_float
-def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "NotDefined",   str_length = "Any",    str_max = "NotDefined",    str_min = "NotDefined",   except_msg = "Type ERROR",    validate = False,    validate_msg = "Enter 1 to confirm the input",   validation_caractere = 1,   validation_caractere_type = "int",   validate_except_msg = "Must be an integer"):
-    
-    # Help section
-
+def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "NotDefined",   str_length = "Any",    str_max = "NotDefined",    str_min = "NotDefined",   except_msg = "type ERROR",    validation = False,    validation_msg = "Enter 1 to confirm the input",   validation_caractere = "1"):
     """
     Improve safety in input by auto-verification of specified parameter without error.
 
     msg
         Can be used to define the message that will be print before asking for input.
         The default is nothing.
-    Type
+    type
         Can be used to specified the type of data that must be input.
 
         POSSIBLE VALUES :
@@ -18,7 +15,7 @@ def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "No
         - "float"
 
         The default is string.
-    Max
+    max
         Can be used to define the maximum value that can be input.
         The default is "NotDefined".
         ONLY FOR "int" or "float"
@@ -40,8 +37,8 @@ def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "No
         ONLY FOR "string" and can not be used with str_length
     except_msg
         Can be used to modify the printed sentence in case of except.
-        The default is "Type ERROR"
-    validate
+        The default is "type ERROR"
+    validation
         Can be used to do a input validation at end
         
         POSSIBLE VALUES :
@@ -49,49 +46,35 @@ def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "No
         - False
 
         The default is False.
-    validate_msg
+    validation_msg
         Can be used to modify the validation sentence.
         The default is : "Enter 1 to confirm the input"
         ONLY IF VALIDATE IS TRUE
-    validate_caractere
-        Can be used to set the caracter that will be used to validate the input.
+    validation_caractere
+        Can be used to set the caracter that will be used to validation the input.
         The default value is 1
         ONLY IF VALIDATE IS TRUE
-    validate_caractere_type
-        Can be used to set the caracter that will be used to validate the input.
 
-        POSSIBLE VALUES :
-        - "string" 
-        - "int" 
-        - "float"
-
-        The default value is 1
-        ONLY IF VALIDATE IS TRUE
-    validate_except_msg
-        Can be used to modify the printed sentence in case of except(for validation)
-        The default is "Must be an integer"
-        ONLY IF VALIDATE IS TRUE
-
-                            ALL PARAMETER IS OPTIONOUS
+                            ALL PARAMETER ARE OPTIONOUS
                 secureinput act like simple input when no parameter is setted
 
     """
     
     # PARAMETER VALIDATION
-    # Parameter Type checking
+    # Parameter type checking
 
-    if(Type != "string" and Type != "int" and Type != "float"):
-        raise ValueError(f"Expected 'string' or 'int' or 'float' for Type but '{Type}'")
+    if(type != "string" and type != "int" and type != "float"):
+        raise ValueError(f"Expected 'string' or 'int' or 'float' for type but '{type}'")
 
-    # Parameter Max checking
+    # Parameter max checking
 
-    if (Max == "NotDefined"):
-        Max = "ND"
+    if (max == "NotDefined"):
+        max = "ND"
     else:
         try:
-            Max = int(Max)
+            max = int(max)
         except ValueError:
-            raise TypeError(f"Expected int value for the parameter Max but '{Max}'")
+            raise TypeError(f"Expected int value for the parameter max but '{max}'")
 
     # Parameter min checking
 
@@ -139,59 +122,44 @@ def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "No
         if (str_min < 0):
             raise ValueError(f"Expected positive value for the parameter str_min but '{str_min}'")
     
-    # Parameter validation_caractere_type checking
-
-    if(validation_caractere_type != "string" and validation_caractere_type != "int" and validation_caractere_type != "float"):
-        raise ValueError(f"Expected 'string' or 'int' or 'float' for validation_caractere_type but '{validation_caractere_type}'")
-    
     # String logic checking
 
-    if ((Max != "ND" or min != "ND") and Type == "string"):
-        raise SyntaxError("The parameters Max or min can not be used with 'string'. Set Type to int or float")
+    if ((max != "ND" or min != "ND") and type == "string"):
+        raise SyntaxError("The parameters max or min can not be used with 'string'. Set type to int or float")
     if(str_length != "ND" and (str_max != "ND" or str_min != "ND")):
         raise SyntaxError("The parameter str_length should not be used with another string parameter")
 
-    if ((str_length != "ND" or str_min != "ND" or str_max != "ND") and (Type == "int" or Type == "float")):
+    if ((str_length != "ND" or str_min != "ND" or str_max != "ND") and (type == "int" or type == "float")):
         raise SyntaxError("The string parameter can not be used with 'int' or 'float' value")
     
     if(str_min != "ND" and str_max != "ND"):
         if(str_min > str_max):
             raise ValueError(f"The parameter 'str_max' should be high than 'str_min' but {str_min} > {str_max}")
     
-    if(min != "ND" and Max != "ND"):
-        if(min > Max):
-            raise ValueError(f"The parameter 'Max' should be high than 'min' but {min} > {Max}")
+    if(min != "ND" and max != "ND"):
+        if(min > max):
+            raise ValueError(f"The parameter 'max' should be high than 'min' but {min} > {max}")
 
-    if validate:
-        if(validate_msg != "Enter 1 to confirm the input" or validation_caractere != 1 or validation_caractere_type != "int" or validate_except_msg == "Must be an integer"):
-            if(validation_caractere != 1 and validate_msg == "Enter 1 to confirm the input"):
-                raise ValueError("The parameter 'validation_msg' must be changed when 'validation_caractere' is modified")
-            elif(validation_caractere_type != "int" and (validate_except_msg == "Must be an integer" or validate_msg == "Enter 1 to confirm the input" or validation_caractere == 1)):
-                raise ValueError("The parameter 'validate_except_msg', 'validate_msg' and 'validation_caractere' must be changed when 'validation_caractere_type' is modified")
+    if validation:
+        validation_caractere = str(validation_caractere)
+        if(validation_caractere != "1" and validation_msg == "Enter 1 to confirm the input"):
+            raise ValueError("The parameter 'validation_msg' must be changed when 'validation_caractere' is modified")
     else:
-        if(validate_msg != "Enter 1 to confirm the input" or validation_caractere != 1 or validation_caractere_type != "int" or validate_except_msg != "Must be an integer"):
-            raise SyntaxError("Validation protocol must be activated (with validate = True) before setting validate parameter")
+        if(validation_msg != "Enter 1 to confirm the input" or validation_caractere != "1"):
+            raise SyntaxError("Validation protocol must be activated (with validation = True) before setting validation parameter")
     
+    # Input according to type
 
-    if(validation_caractere_type == "int"):
-        if(is_int(validation_caractere) == False):
-            raise TypeError(f"The 'validation_caractere_type' must be compatible to 'validation_caractere'. Expect an integer but '{validation_caractere}'")
-    elif(validation_caractere_type == "float"):
-        if(is_float(validation_caractere) == False):
-            raise TypeError(f"The 'validation_caractere_type' must be compatible to 'validation_caractere'. Expect a float but '{validation_caractere}'")
-
-    # Input according to Type
-
-    if (Type == "string"):
+    if (type == "string"):
         while True:
-            if(validation_caractere != 0):
-                C = 0
+            if(validation_caractere != "0"):
+                C = "0"
             else:
-                C = 1
+                C = "1"
             while (C != validation_caractere):
                 value = input(msg)
-                if validate :
-                    C = secureinput(msg = validate_msg, Type = validation_caractere_type, except_msg = validate_except_msg)
+                if validation :
+                    C = input(validation_msg)
                 else:
                     C = validation_caractere
             if(str_length == "ND" and str_max == "ND" and str_min == "ND"):
@@ -218,70 +186,70 @@ def secureinput(msg = "",   Type = "string",    Max = "NotDefined",    min = "No
                             return value
                         else:
                             print(f"The input length must be at least {str_min}")
-    elif (Type == "int"):
+    elif (type == "int"):
         while True:
-            if(validation_caractere != 0):
-                C = 0
+            if(validation_caractere != "0"):
+                C = "0"
             else:
-                C = 1
+                C = "1"
             while (C != validation_caractere):
                 try:
                     value = int(input(msg))
                 except ValueError:
                     print(except_msg)
                     continue
-                if validate :
-                    C = secureinput(msg = validate_msg, Type = validation_caractere_type, except_msg = validate_except_msg)
+                if validation :
+                    C = input(validation_msg)
                 else:
                     C = validation_caractere
-            if(Max == "ND" and min == "ND"):
+            if(max == "ND" and min == "ND"):
                 return value
             else:
-                if(min != "ND" and Max != "ND"):
-                    if (value >= min and value <= Max):
+                if(min != "ND" and max != "ND"):
+                    if (value >= min and value <= max):
                         return value
                     else:
-                        print(f"The number must be between {min} and {Max}")
-                elif(Max != "ND" and min == "ND"):
-                    if (value <= Max):
+                        print(f"The number must be between {min} and {max}")
+                elif(max != "ND" and min == "ND"):
+                    if (value <= max):
                         return value
                     else:
-                        print(f"The number must be equal or less than {Max}")
-                elif(min != "ND" and Max == "ND"):
+                        print(f"The number must be equal or less than {max}")
+                elif(min != "ND" and max == "ND"):
                     if (value >= min):
                         return value
                     else:
                         print(f"The number must be equal or more than {min}")
-    elif(Type == "float"):
+    elif(type == "float"):
         while True:
-            if(validation_caractere != 0):
-                C = 0
+            if(validation_caractere != "0"):
+                C = "0"
             else:
-                C = 1
+                C = "1"
             while (C != validation_caractere):
                 try:
                     value = float(input(msg))
                 except ValueError:
                     print(except_msg)
                     continue
-                if validate :
-                    C = secureinput(msg = validate_msg, Type = validation_caractere_type, except_msg = validate_except_msg)
+                if validation :
+                    C = input(validation_msg)
                 else:
                     C = validation_caractere
-            if(Max == "ND" and min == "ND"):
+            if(max == "ND" and min == "ND"):
                 return value
             else:
-                if(min != "ND" and Max != "ND"):
-                    if (value >= min and value <= Max):
+                if(min != "ND" and max != "ND"):
+                    if (value >= min and value <= max):
                         return value
                     else:
-                        print(f"The number must be between {min} and {Max}")
-                elif(Max != "ND" and min == "ND"):
-                    if (value <= Max):
+                        print(f"The number must be between {min} and {max}")
+                elif(max != "ND" and min == "ND"):
+                    if (value <= max):
                         return value
                     else:
-                        print(f"The number must be equal or less than {Max}")
-                elif(min != "ND" and Max == "ND"):
+                        print(f"The number must be equal or less than {max}")
+                elif(min != "ND" and max == "ND"):
                     if (value >= min):
                         return value
                     else:
