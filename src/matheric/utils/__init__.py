@@ -1,6 +1,6 @@
-from .helpers import info, is_int, is_float
+from .helpers import info
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
-__all__ = ["info", "is_int", "is_float"]
+__all__ = ["info"]
 

@@ -29,22 +29,8 @@ def info():
         https://github.com/orpheric73/matheric
           
     Author  : Orphéric
-    Version : 0.1.1
+    Version : 0.1.2
     License : MIT
     
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     """)
-
-def is_int(n):
-    try:
-        if(int(n) == n):
-            return True
-    except ValueError:
-        return False
-    return False
-def is_float(n):
-    try:
-        float(n) == n
-    except ValueError:
-        return False
-    return True

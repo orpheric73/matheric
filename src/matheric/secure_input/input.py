@@ -1,5 +1,4 @@
-from ..utils.helpers import is_int, is_float
-def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "NotDefined",   str_length = "Any",    str_max = "NotDefined",    str_min = "NotDefined",   except_msg = "type ERROR",    validation = False,    validation_msg = "Enter 1 to confirm the input",   validation_caractere = "1"):
+def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "NotDefined",   str_length = "Any",    str_max = "NotDefined",    str_min = "NotDefined",   except_msg = "Type ERROR",    validation = False,    validation_msg = "Enter 1 to confirm the input",   validation_caractere = "1",    language = "EN"):
     """
     Improve safety in input by auto-verification of specified parameter without error.
 
@@ -37,7 +36,7 @@ def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "No
         ONLY FOR "string" and can not be used with str_length
     except_msg
         Can be used to modify the printed sentence in case of except.
-        The default is "type ERROR"
+        The default is "Type ERROR"
     validation
         Can be used to do a input validation at end
         
@@ -54,6 +53,14 @@ def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "No
         Can be used to set the caracter that will be used to validation the input.
         The default value is 1
         ONLY IF VALIDATE IS TRUE
+    language
+        Can be used to set output language used for the automatic responses
+        
+        POSSIBLE VALUES :
+        - EN
+        - FR
+
+        The default is EN.
 
                             ALL PARAMETER ARE OPTIONOUS
                 secureinput act like simple input when no parameter is setted
@@ -117,11 +124,16 @@ def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "No
     else:
         try:
             str_min = int(str_min)
-        except ValueError:
+        except TypeError:
             raise TypeError(f"Expected int value for the parameter str_min but '{str_min}'")
         if (str_min < 0):
             raise ValueError(f"Expected positive value for the parameter str_min but '{str_min}'")
     
+    # Language checking
+
+    if(language != "EN" and language != "FR"):
+        raise ValueError(f"Expected 'EN' or 'FR' for language but '{language}'")
+
     # String logic checking
 
     if ((max != "ND" or min != "ND") and type == "string"):
@@ -151,106 +163,139 @@ def secureinput(msg = "",   type = "string",    max = "NotDefined",    min = "No
     # Input according to type
 
     if (type == "string"):
-        while True:
-            if(validation_caractere != "0"):
-                C = "0"
-            else:
-                C = "1"
-            while (C != validation_caractere):
+        if(validation_caractere != "0"):
+            C = "0"
+        else:
+            C = "1"
+        while (C != validation_caractere):
+            while True:
                 value = input(msg)
-                if validation :
-                    C = input(validation_msg)
+                if(str_length == "ND" and str_max == "ND" and str_min == "ND"):
+                    break
                 else:
-                    C = validation_caractere
-            if(str_length == "ND" and str_max == "ND" and str_min == "ND"):
-                return value
-            else:
-                if (str_length != "ND"):
-                    if (len(value) == str_length):
-                        return value
+                    if (str_length != "ND"):
+                        if (len(value) == str_length):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The string must contains {str_length} caracteres")
+                            else:
+                                print(f"La chaine doit contenir {str_length} caractêres")
                     else:
-                        print(f"The string must contains {str_length} caracteres")
-                else:
-                    if(str_min != "ND" and str_max != "ND"):
-                        if (len(value) >= str_min and len(value) <= str_max):
-                            return value
-                        else:
-                            print(f"The input length must be between {str_min} and {str_max}")
-                    elif(str_max != "ND" and str_min == "ND"):
-                        if (len(value) <= str_max):
-                            return value
-                        else:
-                            print(f"The input length must be equal or less than {str_max}")
-                    elif(str_min != "ND" and str_max == "ND"):
-                        if (len(value) >= str_min):
-                            return value
-                        else:
-                            print(f"The input length must be at least {str_min}")
+                        if(str_min != "ND" and str_max != "ND"):
+                            if (len(value) >= str_min and len(value) <= str_max):
+                                break
+                            else:
+                                if language == "EN":
+                                    print(f"The string length must be between {str_min} and {str_max}")
+                                else:
+                                    print(f"La longueur de la chaine doit être comprise entre {str_min} et {str_max}")
+                        elif(str_max != "ND" and str_min == "ND"):
+                            if (len(value) <= str_max):
+                                break
+                            else:
+                                if language == "EN":
+                                    print(f"The string length must be less than or equal to {str_max}")
+                                else:
+                                    print(f"La longueur de la chaine doit être inférieure ou égale á {str_max}")
+                        elif(str_min != "ND" and str_max == "ND"):
+                            if (len(value) >= str_min):
+                                break
+                            else:
+                                if language == "EN":
+                                    print(f"The string length must be greater than or equal to {str_min}")
+                                else:
+                                    print(f"La longueur de la chaine doit être supérieure ou égale á {str_max}")
+            if validation :
+                C = input(validation_msg)
+            else :
+                C = validation_caractere
+        return value
     elif (type == "int"):
-        while True:
-            if(validation_caractere != "0"):
-                C = "0"
-            else:
-                C = "1"
-            while (C != validation_caractere):
+        if(validation_caractere != "0"):
+            C = "0"
+        else:
+            C = "1"
+        while (C != validation_caractere):
+            while True:
                 try:
                     value = int(input(msg))
                 except ValueError:
                     print(except_msg)
                     continue
-                if validation :
-                    C = input(validation_msg)
+                if(max == "ND" and min == "ND"):
+                    break
                 else:
-                    C = validation_caractere
-            if(max == "ND" and min == "ND"):
-                return value
+                    if(min != "ND" and max != "ND"):
+                        if (value >= min and value <= max):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be between {min} and {max}")
+                            else:
+                                print(f"La longueur de la chaine doit être comprise entre {min} et {max}")
+                    elif(max != "ND" and min == "ND"):
+                        if (value <= max):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be less than or equal to {max}")
+                            else:
+                                print(f"Le nombre doit être inférieure ou égale á {max}")
+                    elif(min != "ND" and max == "ND"):
+                        if (value >= min):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be greater than or equal to {min}")
+                            else:
+                                print(f"Le nombre doit être supérieure ou égale á {min}")
+            if validation :
+                C = input(validation_msg)
             else:
-                if(min != "ND" and max != "ND"):
-                    if (value >= min and value <= max):
-                        return value
-                    else:
-                        print(f"The number must be between {min} and {max}")
-                elif(max != "ND" and min == "ND"):
-                    if (value <= max):
-                        return value
-                    else:
-                        print(f"The number must be equal or less than {max}")
-                elif(min != "ND" and max == "ND"):
-                    if (value >= min):
-                        return value
-                    else:
-                        print(f"The number must be equal or more than {min}")
+                C = validation_caractere
+        return value
     elif(type == "float"):
-        while True:
-            if(validation_caractere != "0"):
-                C = "0"
-            else:
-                C = "1"
-            while (C != validation_caractere):
+        if(validation_caractere != "0"):
+            C = "0"
+        else:
+            C = "1"
+        while (C != validation_caractere):
+            while True:
                 try:
                     value = float(input(msg))
                 except ValueError:
                     print(except_msg)
                     continue
-                if validation :
-                    C = input(validation_msg)
+                if(max == "ND" and min == "ND"):
+                    break
                 else:
-                    C = validation_caractere
-            if(max == "ND" and min == "ND"):
-                return value
+                    if(min != "ND" and max != "ND"):
+                        if (value >= min and value <= max):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be between {min} and {max}")
+                            else:
+                                print(f"La longueur de la chaine doit être comprise entre {min} et {max}")
+                    elif(max != "ND" and min == "ND"):
+                        if (value <= max):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be less than or equal to {max}")
+                            else:
+                                print(f"Le nombre doit être inférieure ou égale á {max}")
+                    elif(min != "ND" and max == "ND"):
+                        if (value >= min):
+                            break
+                        else:
+                            if language == "EN":
+                                print(f"The number must be greater than or equal to {min}")
+                            else:
+                                print(f"Le nombre doit être supérieure ou égale á {min}")
+            if validation :
+                C = input(validation_msg)
             else:
-                if(min != "ND" and max != "ND"):
-                    if (value >= min and value <= max):
-                        return value
-                    else:
-                        print(f"The number must be between {min} and {max}")
-                elif(max != "ND" and min == "ND"):
-                    if (value <= max):
-                        return value
-                    else:
-                        print(f"The number must be equal or less than {max}")
-                elif(min != "ND" and max == "ND"):
-                    if (value >= min):
-                        return value
-                    else:
-                        print(f"The number must be equal or more than {min}")
+                C = validation_caractere
+        return value

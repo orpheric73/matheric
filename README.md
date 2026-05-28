@@ -113,10 +113,11 @@ The validation system allows the user to confirm the entered value before final 
 | `str_length` | `int` | Exact required string length | Any |
 | `str_max` | `int` | Maximum allowed string length | NotDefined |
 | `str_min` | `int` | Minimum allowed string length | NotDefined |
-| `except_msg` | `string` | Message displayed on invalid input | type ERROR |
+| `except_msg` | `string` | Message displayed on invalid input | Type ERROR |
 | `validation` | `bool` | Enables validation protocol | False |
 | `validation_msg` | `string` | Validation confirmation message | Enter 1 to confirm the input |
 | `validation_caractere` | `string / int / float` | Value required to validation input | 1 |
+| `language` | `EN / FR` | Output language used for automatic responses | EN |
 
 ## 💡 Example With Validation
 
